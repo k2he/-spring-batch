@@ -1,6 +1,7 @@
 package com.demo.batch.springbatch.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Order {
 
   private BigDecimal amount;
 
-  private String orderDate;
+  private LocalDateTime orderDate;
 
   private String note;
 
