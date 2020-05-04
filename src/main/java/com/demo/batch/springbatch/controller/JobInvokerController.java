@@ -27,14 +27,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JobInvokerController {
 
-  @Autowired
+  @NonNull
   private JobLauncher jobLauncher;
 
-  @Autowired
+  @NonNull
   private OrderService orderService;
   
-  @Autowired
-//  @Qualifier("orderLoadJob")
+  @NonNull
   private Job orderLoadJob;
   
   @RequestMapping("/run-batch-job")
