@@ -3,6 +3,7 @@
  */
 package com.demo.batch.springbatch.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -42,7 +43,7 @@ public class JobInvokerController {
         .addString("source", "Spring Boot").toJobParameters();
     jobLauncher.run(orderLoadJob, jobParameters);
 
-    return "Batch job has been invoked";
+    return "Batch job has been invoked at " + LocalDateTime.now();
   }
   
   @GetMapping("/orders")

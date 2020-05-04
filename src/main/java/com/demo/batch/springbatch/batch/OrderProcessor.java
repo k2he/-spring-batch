@@ -23,7 +23,6 @@ public class OrderProcessor implements ItemProcessor<Order, Order> {
         .amount(order.getAmount())
         .note(order.getNote())
         .orderDate(order.getOrderDate())
-//        .orderDate(Instant.ofEpochMilli(order.getTempOrderDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime())
         .build();
     
     return processedOrder;
