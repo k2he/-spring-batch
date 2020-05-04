@@ -37,7 +37,4 @@ public class Order {
   private LocalDateTime orderDate;
 
   private String note;
-
-  @Transient
-  private Date tempOrderDate;
 }
