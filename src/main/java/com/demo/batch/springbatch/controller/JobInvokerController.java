@@ -9,13 +9,11 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.demo.batch.springbatch.model.Order;
-import com.demo.batch.springbatch.service.OrderService;
+import com.demo.batch.springbatch.model.User;
+import com.demo.batch.springbatch.service.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -32,22 +30,22 @@ public class JobInvokerController {
   private JobLauncher jobLauncher;
 
   @NonNull
-  private OrderService orderService;
+  private UserService userService;
   
   @NonNull
-  private Job orderLoadJob;
+  private Job userLoadJob;
   
   @RequestMapping("/run-batch-job")
   public String handle() throws Exception {
     JobParameters jobParameters = new JobParametersBuilder()
         .addString("source", "Spring Boot").toJobParameters();
-    jobLauncher.run(orderLoadJob, jobParameters);
+    jobLauncher.run(userLoadJob, jobParameters);
 
     return "Batch job has been invoked at " + LocalDateTime.now();
   }
   
-  @GetMapping("/orders")
-  List<Order> all() {
-    return orderService.getAll();
+  @GetMapping("/users")
+  List<User> all() {
+    return userService.getAll();
   }
 }

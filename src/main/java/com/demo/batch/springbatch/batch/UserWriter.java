@@ -6,11 +6,12 @@ package com.demo.batch.springbatch.batch;
 import java.util.List;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import com.demo.batch.springbatch.model.Order;
-import com.demo.batch.springbatch.repository.OrderRepository;
+import com.demo.batch.springbatch.model.User;
+import com.demo.batch.springbatch.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author kaihe
@@ -18,15 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Component
 @RequiredArgsConstructor
-public class OrderWriter implements ItemWriter<Order> {
+public class UserWriter implements ItemWriter<User> {
 
   @NonNull
-  private OrderRepository repo;
+  private UserRepository repo;
   
   @Override
   @Transactional
-  public void write(List<? extends Order> orders) throws Exception {
-    repo.saveAll(orders);
+  public void write(List<? extends User> users) throws Exception {
+    repo.saveAll(users);
   }
 
 }

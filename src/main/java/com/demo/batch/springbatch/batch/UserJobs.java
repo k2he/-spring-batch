@@ -11,11 +11,12 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import com.demo.batch.springbatch.BatchConstants;
 import com.demo.batch.springbatch.config.AppConfig;
-import com.demo.batch.springbatch.model.Order;
+import com.demo.batch.springbatch.model.User;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class OrderJob extends JobExecutionListenerSupport {
+public class UserJobs extends JobExecutionListenerSupport {
   @NonNull
   private JobBuilderFactory jobBuilderFactory;
   
@@ -31,29 +32,39 @@ public class OrderJob extends JobExecutionListenerSupport {
   private StepBuilderFactory stepBuilderFactory;
   
   @NonNull
-  private OrderProcessor orderProcessor;
+  private UserProcessor userProcessor;
   
   @NonNull
-  private OrderWriter orderWriter;
+  private UserWriter userWriter;
   
   @NonNull
   private AppConfig appConfig;
   
-  @Bean(name = "orderLoadJob")
-  public Job orderLoadJob() {
-    Step step = stepBuilderFactory.get(BatchConstants.BATCH_STEP_1)
-        .<Order, Order>chunk(5)
-        .reader(new OrderReader(appConfig))
-        .processor(orderProcessor)
-        .writer(orderWriter).build();
+  @Bean(name = "userLoadJob")
+  public Job userLoadJob() {
     
-    Job job = jobBuilderFactory.get(BatchConstants.ORDER_PROCESS_JOB)
+    Job job = jobBuilderFactory.get(BatchConstants.USER_PROCESS_JOB)
         .incrementer(new RunIdIncrementer())
         .listener(this)
-        .start(step)
+        .start(step1())
         .build();
 
     return job;
+  }
+  
+  @Bean
+  public Step step1() {
+    Step step = stepBuilderFactory.get(BatchConstants.BATCH_STEP_1)
+        .<User, User>chunk(5)
+        .reader(new UserReader(appConfig))
+        .processor(processor())
+        .writer(userWriter).build();
+    return step;
+  }
+  
+  @Bean
+  public ItemProcessor<User, User> processor() {
+      return new UserProcessor();
   }
   
   @Override
