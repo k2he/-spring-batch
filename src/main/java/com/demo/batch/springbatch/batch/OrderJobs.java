@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import com.demo.batch.springbatch.BatchConstants;
 import com.demo.batch.springbatch.config.AppConfig;
+import com.demo.batch.springbatch.model.Order;
 import com.demo.batch.springbatch.model.User;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -24,47 +25,58 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class UserJobs extends JobExecutionListenerSupport {
+public class OrderJobs extends JobExecutionListenerSupport {
   @NonNull
   private JobBuilderFactory jobBuilderFactory;
   
   @NonNull
   private StepBuilderFactory stepBuilderFactory;
   
-  @NonNull
-  private UserProcessor userProcessor;
+  @NonNull 
+  private DataCleaningTasklet dataCleaningTasklet;
   
   @NonNull
-  private UserWriter userWriter;
+  private OrderProcessor userProcessor;
+  
+  @NonNull
+  private OrderWriter orderWriter;
   
   @NonNull
   private AppConfig appConfig;
   
-  @Bean(name = "userLoadJob")
-  public Job userLoadJob() {
+  @Bean(name = "orderLoadJob")
+  public Job orderLoadJob() {
     
-    Job job = jobBuilderFactory.get(BatchConstants.USER_PROCESS_JOB)
+    Job job = jobBuilderFactory.get(BatchConstants.ORDER_PROCESS_JOB)
         .incrementer(new RunIdIncrementer())
         .listener(this)
         .start(step1())
+        .next(step2())
         .build();
 
     return job;
   }
   
   @Bean
-  public Step step1() {
-    Step step = stepBuilderFactory.get(BatchConstants.BATCH_STEP_1)
-        .<User, User>chunk(5)
-        .reader(new UserReader(appConfig))
+  protected Step step1() {
+    return stepBuilderFactory.get(BatchConstants.BATCH_STEP_1)
+        .tasklet(dataCleaningTasklet)
+        .build();
+  }
+  
+  @Bean
+  public Step step2() {
+    Step step = stepBuilderFactory.get(BatchConstants.BATCH_STEP_2)
+        .<Order, Order>chunk(5)
+        .reader(new OrderReader(appConfig))
         .processor(processor())
-        .writer(userWriter).build();
+        .writer(orderWriter).build();
     return step;
   }
   
   @Bean
-  public ItemProcessor<User, User> processor() {
-      return new UserProcessor();
+  public ItemProcessor<Order, Order> processor() {
+      return new OrderProcessor();
   }
   
   @Override

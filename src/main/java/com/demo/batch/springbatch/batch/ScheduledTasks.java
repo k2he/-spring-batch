@@ -29,7 +29,7 @@ public class ScheduledTasks {
   private JobLauncher jobLauncher;
 
 //  @NonNull
-//  private Job userLoadJob;
+//  private Job orderLoadJob;
 //  
 ////  @Scheduled(cron = "0 30 13 * * ?") // Fire at 13:30 every day
 //  @Scheduled(cron = "0 40 13 ? * MON-FRI") // Fire at 13:40 every Monday to Friday
@@ -37,7 +37,7 @@ public class ScheduledTasks {
 //      log.info("Cron Task :: Execution Time - {}", LocalDateTime.now());
 //      JobParameters jobParameters = new JobParametersBuilder()
 //          .addString("source", "Spring Boot").toJobParameters();
-//      jobLauncher.run(userLoadJob, jobParameters);
+//      jobLauncher.run(orderLoadJob, jobParameters);
 //      log.info("Batch job has been invoked at {}", LocalDateTime.now());
 //  }
 }

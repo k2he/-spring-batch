@@ -2,8 +2,8 @@ package com.demo.batch.springbatch.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import com.demo.batch.springbatch.model.User;
-import com.demo.batch.springbatch.repository.UserRepository;
+import com.demo.batch.springbatch.model.Order;
+import com.demo.batch.springbatch.repository.OrderRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -16,9 +16,9 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
   
   @NonNull
-  private UserRepository userRespository;
+  private OrderRepository orderRespository;
   
-  public List<User> getAll() {
-    return userRespository.findAll();
+  public List<Order> getAll() {
+    return orderRespository.findAll();
   }
 }

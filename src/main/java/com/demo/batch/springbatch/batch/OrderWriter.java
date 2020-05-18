@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.demo.batch.springbatch.model.Order;
 import com.demo.batch.springbatch.model.User;
-import com.demo.batch.springbatch.repository.UserRepository;
+import com.demo.batch.springbatch.repository.OrderRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -19,15 +19,15 @@ import lombok.RequiredArgsConstructor;
  */
 @Component
 @RequiredArgsConstructor
-public class UserWriter implements ItemWriter<User> {
+public class OrderWriter implements ItemWriter<Order> {
 
   @NonNull
-  private UserRepository repo;
+  private OrderRepository orderRepository;
   
   @Override
   @Transactional
-  public void write(List<? extends User> users) throws Exception {
-    repo.saveAll(users);
+  public void write(List<? extends Order> orders) throws Exception {
+    orderRepository.saveAll(orders);
   }
 
 }
