@@ -28,8 +28,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "orders") //'order' key word is resvered for SQL
-public class Order {
+@Table(name = "orders_stage")
+public class OrderStage {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
