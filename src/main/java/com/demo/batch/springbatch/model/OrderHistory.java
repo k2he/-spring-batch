@@ -28,8 +28,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "orders") //'order' key word is resvered for SQL
-public class Order {
+@Table(name = "orders_history")
+public class OrderHistory {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +47,9 @@ public class Order {
   @Column(columnDefinition = "BLOB")
   private String productJson;
   
-  @CreatedDate
   private LocalDateTime createdDateTime;
+  
+  @CreatedDate
+  private LocalDateTime archivedDateTime;
+  
 }

@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.demo.batch.springbatch.model.Order;
-import com.demo.batch.springbatch.model.User;
-import com.demo.batch.springbatch.service.UserService;
+import com.demo.batch.springbatch.service.OrderService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +31,7 @@ public class JobInvokerController {
   private JobLauncher jobLauncher;
 
   @NonNull
-  private UserService userService;
+  private OrderService userService;
   
   @NonNull
   private Job orderLoadJob;
