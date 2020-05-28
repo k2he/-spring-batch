@@ -15,12 +15,9 @@ public class BatchConstants {
   
   //Step Names
   public static final String BATCH_STEP_1 = "schema-validation-step";
-  public static final String BATCH_STEP_2 = "convert-xml-to-json-file-step";
-  public static final String BATCH_STEP_3 = "data-cleaning-step";
-  public static final String BATCH_STEP_4 = "save-to-order-stage-step";
-  public static final String BATCH_STEP_5 = "get-order-sequence-step";
-  public static final String BATCH_STEP_6 = "move-data-to-order-step";
-  public static final String BATCH_STEP_7 = "remove-old-order-step";
+  public static final String BATCH_STEP_2 = "stage-data-cleaning-step";
+  public static final String BATCH_STEP_3 = "save-xml-to-order-stage-step";
+  public static final String BATCH_STEP_4 = "move-stage-to-order-table-step";
   
-  public static final String ORDER_NEXT_SEQ_VALUE = "nextSeqValue";
+  public static final String XML_TO_STAGETABLE_TASK_EXECUTOR ="xmltoStageTableTaskExecutor";
 }

@@ -20,10 +20,8 @@ public class AppProperties {
   
   private String xmlFilePath;
 
-  private String jsonFilePath;
-
   private int fileBatchSize;
 
-  private int databaseBatchSize;
+  private int threadpoolSize;
 
 }

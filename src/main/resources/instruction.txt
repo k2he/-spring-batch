@@ -1,0 +1,8 @@
+1) If schema file(xml_schema.xsd) changed, we need change POJO class in order map XML into Java object.
+2) Go to directory "src\main\resources" where the xml_schema.xsd is located
+3) run "xjc -p com.demo.batch.springbatch.dto xml_schema.xsd" in command line
+4) Move generated ObjectFactory.java and OrderList.java 2 files into com.demo.batch.springbatch.dto directory
+5) add @XmlRootElement(name = "order") to top of Order class
+
+6) To start pcc-batch run this command:
+mvn spring-boot:run -Dspring-boot.run.arguments=--app.config.home=C:/Users/***/Dev 

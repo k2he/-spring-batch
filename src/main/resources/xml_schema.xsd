@@ -1,49 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="root">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="order_list">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="order" maxOccurs="unbounded" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element type="xs:string" name="orderRef"/>
-                    <xs:element type="xs:float" name="amount"/>
-                    <xs:element type="xs:date" name="orderDate"/>
-                    <xs:element type="xs:string" name="note"/>
-                    <xs:element name="productInformation">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element type="xs:string" name="productName"/>
-                          <xs:element type="xs:string" name="productCode"/>
-                          <xs:element type="xs:short" name="bin"/>
-                          <xs:element name="productOfferList">
-                            <xs:complexType>
-                              <xs:sequence>
-                                <xs:element name="productOffer" maxOccurs="unbounded" minOccurs="0">
-                                  <xs:complexType>
-                                    <xs:sequence>
-                                      <xs:element type="xs:string" name="code"/>
-                                      <xs:element type="xs:string" name="description"/>
-                                      <xs:element type="xs:byte" name="discount"/>
-                                    </xs:sequence>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:sequence>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+	<xs:element name="order_list">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="order" maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element type="xs:string" name="orderRef" />
+							<xs:element type="xs:float" name="amount" />
+							<xs:element type="xs:date" name="orderDate" />
+							<xs:element type="xs:string" name="note" />
+							<xs:element name="productInformation">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="productName" />
+										<xs:element type="xs:string" name="productCode" />
+										<xs:element type="xs:short" name="bin" />
+										<xs:element name="productOfferList">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="productOffer" maxOccurs="unbounded"
+														minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element type="xs:string" name="code" />
+																<xs:element type="xs:string" name="description" />
+																<xs:element type="xs:byte" name="discount" />
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>

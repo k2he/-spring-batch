@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class StoreOrderNextSeqTasklet implements Tasklet {
+public class MoveStageToOrderAndBackupTasklet implements Tasklet {
 
   @NonNull
   private OrderRepository orderRepository;
@@ -26,10 +26,11 @@ public class StoreOrderNextSeqTasklet implements Tasklet {
   @Override
   public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext)
       throws Exception {
-    Long nextSeqValue = orderRepository.getNextSequenceValue();
-    ExecutionContext jobExecutionContext =
-        contribution.getStepExecution().getJobExecution().getExecutionContext();
-    jobExecutionContext.putLong(BatchConstants.ORDER_NEXT_SEQ_VALUE, nextSeqValue);
+    /*
+    * Call Store procedure to move data from PROD_CAT_EXTRACT_STAGE table to PROD_CAT_EXTRACT table and
+    * then move old data from PROD_CAT_EXTRACT table to PROD_CAT_EXTRACT_HIST table
+    */
+    orderRepository.moveStageToOrderTable();
     return RepeatStatus.FINISHED;
   }
 

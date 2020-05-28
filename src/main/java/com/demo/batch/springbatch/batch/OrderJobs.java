@@ -12,23 +12,18 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
-import com.demo.batch.springbatch.batch.order.OrderProcessor;
-import com.demo.batch.springbatch.batch.order.OrderReader;
-import com.demo.batch.springbatch.batch.order.OrderWriter;
-import com.demo.batch.springbatch.batch.order.ReplaceOrderDataTasklet;
-import com.demo.batch.springbatch.batch.order.StoreOrderNextSeqTasklet;
+import com.demo.batch.springbatch.batch.order.MoveStageToOrderAndBackupTasklet;
 import com.demo.batch.springbatch.batch.stage.DataCleaningTasklet;
 import com.demo.batch.springbatch.batch.stage.OrderStageProcessor;
 import com.demo.batch.springbatch.batch.stage.OrderStageReader;
 import com.demo.batch.springbatch.batch.stage.OrderStageWriter;
 import com.demo.batch.springbatch.batch.stage.SchemaValidationTasklet;
-import com.demo.batch.springbatch.batch.stage.XmltoJsonFileTasklet;
 import com.demo.batch.springbatch.config.AppProperties;
-import com.demo.batch.springbatch.model.Order;
+import com.demo.batch.springbatch.dto.OrderList.Order;
 import com.demo.batch.springbatch.model.OrderStage;
 import com.demo.batch.springbatch.util.BatchConstants;
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,8 +47,8 @@ public class OrderJobs extends JobExecutionListenerSupport {
   private SchemaValidationTasklet schemaValidationTasklet;
 
   @NonNull
-  private XmltoJsonFileTasklet xmltoJsonFileTasklet;
-
+  private TaskExecutor taskExecutor;
+  
   @NonNull
   private DataCleaningTasklet dataCleaningTasklet;
 
@@ -67,19 +62,7 @@ public class OrderJobs extends JobExecutionListenerSupport {
   private OrderStageWriter orderStageWriter;
 
   @NonNull
-  private ReplaceOrderDataTasklet replaceOrderDataTasklet;
-  
-  @NonNull
-  private StoreOrderNextSeqTasklet storeOrderNextSeqTasklet;
-  
-  @NonNull
-  private OrderReader orderReader;
-  
-  @NonNull
-  private OrderProcessor orderProcessor;
-  
-  @NonNull
-  private OrderWriter orderWriter;
+  private MoveStageToOrderAndBackupTasklet moveStageToOrderAndBackupTasklet;
   
   @NonNull
   private AppProperties appProperties;
@@ -87,8 +70,12 @@ public class OrderJobs extends JobExecutionListenerSupport {
   @Bean(name = "orderLoadJob")
   public Job orderLoadJob() {
     Job job = jobBuilderFactory.get(BatchConstants.ORDER_PROCESS_JOB)
-        .incrementer(new RunIdIncrementer()).listener(this).start(step1()).next(step2())
-        .next(step3()).next(step4()).next(step5()).next(step6()).next(step7()).build();
+        .incrementer(new RunIdIncrementer()).listener(this)
+        .start(step1())
+        .next(step2())
+        .next(step3())
+        .next(step4())
+        .build();
     return job;
   }
 
@@ -100,57 +87,35 @@ public class OrderJobs extends JobExecutionListenerSupport {
         .build();
   }
 
-  // Convert Xml file to Json file
-  @Bean
-  protected Step step2() {
-    return stepBuilderFactory.get(BatchConstants.BATCH_STEP_2).tasklet(xmltoJsonFileTasklet)
-        .build();
-  }
-
   // Clean Existing data in Stage table
   @Bean
-  protected Step step3() {
-    return stepBuilderFactory.get(BatchConstants.BATCH_STEP_3).tasklet(dataCleaningTasklet)
+  protected Step step2() {
+    return stepBuilderFactory.get(BatchConstants.BATCH_STEP_2).tasklet(dataCleaningTasklet)
         .build();
   }
 
-  // Parse Json, Convert to ProductCatalogExtractStage and save into Stage table
+  // Parse XML, Convert to OrderStage and save into Stage table
   @Bean
-  public Step step4() {
-    Step step = stepBuilderFactory.get(BatchConstants.BATCH_STEP_4)
-        .<JsonNode, OrderStage>chunk(appProperties.getFileBatchSize())
+  public Step step3() {
+    Step step = stepBuilderFactory.get(BatchConstants.BATCH_STEP_3)
+        .<Order, OrderStage>chunk(appProperties.getFileBatchSize())
         .reader(orderStageReader)
         .processor(orderStageProcessor)
         .writer(orderStageWriter)
+        .taskExecutor(taskExecutor)
+        .throttleLimit(appProperties.getThreadpoolSize())
         .build();
     return step;
   }
 
-  // Read and store current sequence for ProductCatalogExtrat table for later use
+  // Copy OrderStage data into Order table and then move old data into OrderHistory table
   @Bean
-  public Step step5() {
-    return stepBuilderFactory.get(BatchConstants.BATCH_STEP_5)
-        .tasklet(storeOrderNextSeqTasklet).build();
+  public Step step4() {
+    return stepBuilderFactory.get(BatchConstants.BATCH_STEP_4)
+        .tasklet(moveStageToOrderAndBackupTasklet).build();
   }
 
-  // Parse Json, Convert to ProductCatalogExtractStage and save into Stage table
-  @Bean
-  public Step step6() {
-    Step step = stepBuilderFactory.get(BatchConstants.BATCH_STEP_6)
-        .<OrderStage, Order>chunk(appProperties.getDatabaseBatchSize())
-        .reader(orderReader)
-        .processor(orderProcessor)
-        .writer(orderWriter).build();
-    return step;
-  }
-
-  @Bean
-  protected Step step7() {
-    return stepBuilderFactory.get(BatchConstants.BATCH_STEP_7).tasklet(replaceOrderDataTasklet)
-        .build();
-  }
-
-
+  
   @Override
   public void beforeJob(JobExecution jobExecution) {
     if (jobExecution.getStatus() == STARTED) {

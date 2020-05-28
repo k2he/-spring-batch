@@ -42,10 +42,10 @@ public class OrderHistory {
   private LocalDate orderDate;
 
   private String note;
-  
+
   @Lob
-  @Column(columnDefinition = "BLOB")
-  private String productJson;
+  @Column(columnDefinition = "CLOB NOT NULL")
+  private String productJson; 
   
   private LocalDateTime createdDateTime;
   

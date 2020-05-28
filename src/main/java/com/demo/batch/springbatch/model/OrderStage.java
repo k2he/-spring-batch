@@ -44,8 +44,8 @@ public class OrderStage {
   private String note;
   
   @Lob
-  @Column(columnDefinition = "BLOB")
-  private String productJson;
+  @Column(columnDefinition = "CLOB NOT NULL")
+  private String productJson; 
   
   @CreatedDate
   private LocalDateTime createdDateTime;
