@@ -5,6 +5,7 @@ package com.demo.batch.springbatch.config;
 
 import java.util.HashMap;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -14,7 +15,6 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import com.demo.batch.springbatch.dto.OrderList;
-import com.demo.batch.springbatch.dto.OrderList.Order;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -47,6 +47,7 @@ public class AppConfig {
   }
 
   @Bean
+  @StepScope
   public TaskExecutor taskExecutor() {
     ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
     taskExecutor.setMaxPoolSize(appProperties.getThreadpoolSize());
