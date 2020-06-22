@@ -1,20 +1,21 @@
 package com.demo.batch.springbatch.service;
 
 import java.io.File;
-import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
-import javax.xml.transform.stream.StreamResult;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import javax.xml.bind.JAXBElement;
 import org.springframework.stereotype.Service;
 import com.demo.batch.springbatch.config.AppProperties;
+import com.demo.batch.springbatch.dto.JAXBElementMixin;
 import com.demo.batch.springbatch.dto.OrderList;
 import com.demo.batch.springbatch.model.Order;
 import com.demo.batch.springbatch.model.OrderStage;
 import com.demo.batch.springbatch.repository.OrderRepository;
 import com.demo.batch.springbatch.util.XmlUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +35,8 @@ public class OrderServiceImpl implements OrderService {
   @NonNull
   private AppProperties appProperties;
 
-  @NonNull
-  private Jaxb2Marshaller marshaller;
+  private static final String JSON_DATE_FORMAT = "YYYY-MM-dd";
+
 
   public List<Order> getAll() {
     return orderRespository.findAll();
@@ -50,25 +51,21 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public OrderStage convertToOrderStage(OrderList.Order orderObj)
-      throws Exception {
-    // Convert SourceCode into XML format, then convert the xml into Json
-    final StringWriter xmlOut = new StringWriter();
-    marshaller.marshal(orderObj, new StreamResult(xmlOut));
-    String xmlValue = xmlOut.toString();
-    xmlOut.close();
-    String productJson = XmlUtils.convertXmlToJsonString(xmlValue);
-    
-    LocalDate orderDate = LocalDate.of(orderObj.getOrderDate().getYear(),
-        orderObj.getOrderDate().getMonth(),
-        orderObj.getOrderDate().getDay());
+  public OrderStage convertToOrderStage(OrderList.Order orderObj) throws Exception {
+    // Convert orderObj to Json String
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new JaxbAnnotationModule());
+    mapper.addMixIn(JAXBElement.class, JAXBElementMixin.class);
+    mapper.setDateFormat(new SimpleDateFormat(JSON_DATE_FORMAT));
+    String jsonValue = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(orderObj);
+    log.info(jsonValue);
 
-    OrderStage orderStage = OrderStage.builder()
-        .orderRef(orderObj.getOrderRef())
-        .amount(BigDecimal.valueOf(orderObj.getAmount()))
-        .orderDate(orderDate)
-        .productJson(productJson)
-        .build();
+    LocalDate orderDate = LocalDate.of(orderObj.getOrderDate().getValue().getYear(),
+        orderObj.getOrderDate().getValue().getMonth(), orderObj.getOrderDate().getValue().getDay());
+
+    OrderStage orderStage = OrderStage.builder().orderRef(orderObj.getOrderRef().getValue())
+        .amount(BigDecimal.valueOf(orderObj.getAmount().getValue())).orderDate(orderDate)
+        .productJson(jsonValue).build();
     return orderStage;
   }
 
