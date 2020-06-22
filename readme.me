@@ -9,6 +9,6 @@ To encripty db password
   2) To generate Dev encripted password: java -cp jasypt-1.9.3.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input="db_password" password=devsecret algorithm=PBEWithMD5AndDES
   
 To start pcc-batch run this command: 
-java -jar -Dlogging.config='C:/Users/**/Dev/batch/config/log4j2.xml'  spring-batch-0.0.1-SNAPSHOT.jar --app.config.home="C:/Users/**/Dev/batch/config" --jasypt.encryptor.password="devsecret"
+java -jar -Dlogging.config='C:/Users/**/Dev/spring-batch/shell_script/config/log4j2.xml'  spring-batch-0.0.1-SNAPSHOT.jar --app.config.home="C:/Users/**/Dev/spring-batch/shell_script/config" --jasypt.encryptor.password="devsecret"
 or 
-mvn spring-boot:run -Dspring-boot.run.arguments=--app.config.home=C:/Users/***/Dev
+mvn spring-boot:run -Dspring-boot.run.arguments=--app.config.home=C:/Users/***/Dev/spring-batch/shell_script
