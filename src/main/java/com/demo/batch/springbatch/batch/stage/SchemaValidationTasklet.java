@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-*
-* @author kaihe
-*
-*/
+ *
+ * @author kaihe
+ *
+ */
 
 @Slf4j
 @Component
@@ -30,12 +30,8 @@ public class SchemaValidationTasklet implements Tasklet {
   public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext)
       throws Exception {
     log.info("Validating product xml with schema...");
-    boolean isValid = orderService.validateXml();
-    if (isValid) {
-      return RepeatStatus.FINISHED;
-    } else {
-      throw new BatchJobException("Xml file doesn't match schema");
-    }
+    orderService.validateXml();
+    return RepeatStatus.FINISHED;
   }
 
 }

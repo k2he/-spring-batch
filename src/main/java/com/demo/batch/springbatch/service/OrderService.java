@@ -13,7 +13,7 @@ public interface OrderService {
 
   List<Order> getAll();
 
-  boolean validateXml();
+  boolean validateXml() throws Exception;
 
   OrderStage convertToOrderStage(OrderList.Order orderObj) throws Exception;
 

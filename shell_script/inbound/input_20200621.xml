@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<order_list>
+	<order>
+		<orderRef>REF_0001</orderRef>
+		<amount>10000.00</amount>
+		<orderDate>2018-12-12</orderDate>
+		<note>Details</note>
+		<productInformation>
+			<productName>Iphone xs max</productName>
+			<productCode>ip10000000</productCode>
+			<bin>1000</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+				<productOffer>
+					<code>offer0002</code>
+					<description>Employee discount</description>
+					<discount>40</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+	<order>
+		<orderRef>REF_0002</orderRef>
+		<amount>12500.00</amount>
+		<orderDate>2018-12-13</orderDate>
+		<note>Another</note>
+		<productInformation>
+			<productName>Iphone xs max case</productName>
+			<productCode>ip10000001</productCode>
+			<bin>1001</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+				<productOffer>
+					<code>offer0002</code>
+					<description>Employee discount</description>
+					<discount>40</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+	<order>
+		<orderRef>REF_0003</orderRef>
+		<amount>100</amount>
+		<orderDate>2018-12-14</orderDate>
+		<note>Somethings</note>
+		<productInformation>
+			<productName>Ipad</productName>
+			<productCode>ip10000002</productCode>
+			<bin>1002</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+				<productOffer>
+					<code>offer0003</code>
+					<description>Company discount</description>
+					<discount>10</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+	<order>
+		<orderRef>REF_0004</orderRef>
+		<amount>6500.00</amount>
+		<orderDate>2018-12-15</orderDate>
+		<note>Items</note>
+		<productInformation>
+			<productName>Airpod pro</productName>
+			<productCode>ip10000003</productCode>
+			<bin>1003</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0002</code>
+					<description>Employee discount</description>
+					<discount>10</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+	<order>
+		<orderRef>REF_0005</orderRef>
+		<amount>5420.00</amount>
+		<orderDate>2018-12-16</orderDate>
+		<note></note>
+		<productInformation>
+			<productName>Mac book pro</productName>
+			<productCode>ip10000004</productCode>
+			<bin>1004</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+	<order>
+		<orderRef>REF_0006</orderRef>
+		<amount>253.25</amount>
+		<orderDate>2018-12-17</orderDate>
+		<note>Orders</note>
+		<productInformation>
+			<productName>Iphone xs max</productName>
+			<productCode>ip10000005</productCode>
+			<bin>1005</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+				<productOffer>
+					<code>offer0002</code>
+					<description>Employee discount</description>
+					<discount>40</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+	<order>
+		<orderRef>REF_0007</orderRef>
+		<amount>78520.50</amount>
+		<orderDate>2018-12-18</orderDate>
+		<note></note>
+		<productInformation>
+			<productName>Ipad mini</productName>
+			<productCode>ip10000006</productCode>
+			<bin>1006</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+				<productOffer>
+					<code>offer0002</code>
+					<description>Employee discount</description>
+					<discount>40</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+	<order>
+		<orderRef>REF_0008</orderRef>
+		<amount>1500.00</amount>
+		<orderDate>2018-12-19</orderDate>
+		<note></note>
+		<productInformation>
+			<productName>Iphone xs max</productName>
+			<productCode>ip10000007</productCode>
+			<bin>1007</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+				<productOffer>
+					<code>offer0002</code>
+					<description>Employee discount</description>
+					<discount>40</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+	<order>
+		<orderRef>REF_0009</orderRef>
+		<amount>15200.00</amount>
+		<orderDate>2018-12-20</orderDate>
+		<note>Customers</note>
+		<productInformation>
+			<productName>Iphone charger</productName>
+			<productCode>ip10000008</productCode>
+			<bin>1008</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+	<order>
+		<orderRef>REF_0010</orderRef>
+		<amount>7820.00</amount>
+		<orderDate>2018-12-21</orderDate>
+		<note></note>
+		<productInformation>
+			<productName>Macbook charger</productName>
+			<productCode>ip10000009</productCode>
+			<bin>1009</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+</order_list>

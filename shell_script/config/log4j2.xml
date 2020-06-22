@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %x %X %-5level %logger{36} - %msg%n" />
+		</Console>
+		<File name="main" fileName="log/main.log">
+			<PatternLayout pattern="%d %-5p [%t] %c - %m%n" />
+		</File>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="com.demo.batch" level="info" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="main" />
+		</Logger>
+		<Root level="info">
+			<AppenderRef ref="console" />
+		</Root>
+	</Loggers>
+
+</Configuration>
