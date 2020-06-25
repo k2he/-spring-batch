@@ -50,10 +50,10 @@ public class OrderServiceImpl implements OrderService {
   @NonNull
   private AppProperties appProperties;
 
+  @NonNull
+  private ObjectMapper objectMapper;
+  
   private static final String SCHEMA_FILE_NAME = "classpath:xml_schema.xsd";
-
-  private static final String JSON_DATE_FORMAT = "YYYY-MM-dd";
-
 
   public List<Order> getAll() {
     return orderRespository.findAll();
@@ -92,11 +92,7 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public OrderStage convertToOrderStage(OrderList.Order orderObj) throws Exception {
     // Convert orderObj to Json String
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.registerModule(new JaxbAnnotationModule());
-    mapper.addMixIn(JAXBElement.class, JAXBElementMixin.class);
-    mapper.setDateFormat(new SimpleDateFormat(JSON_DATE_FORMAT));
-    String jsonValue = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(orderObj);
+    String jsonValue = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(orderObj);
     log.info(jsonValue);
 
     LocalDate orderDate = LocalDate.of(orderObj.getOrderDate().getValue().getYear(),
