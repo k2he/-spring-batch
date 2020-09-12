@@ -29,10 +29,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "orders") // 'order' key word is resvered for SQL
-@NamedStoredProcedureQuery(name = "moveStageToOrderTable",
-    procedureName = "move_stage_to_orders_table", 
-    resultClasses = Order.class)
+@Table(name = "orders") // 'order' key word is reserved for SQL
 public class Order {
 
   @Id

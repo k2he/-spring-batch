@@ -32,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @PropertySource("file:${app.config.home:src/main/resources}/application.properties")
 @EnableJpaAuditing
-@EnableBatchProcessing
 @EnableScheduling
 public class AppConfig {
 

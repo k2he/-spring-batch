@@ -7,6 +7,7 @@ import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.stereotype.Component;
 import com.demo.batch.springbatch.repository.OrderRepository;
+import com.demo.batch.springbatch.repository.OrderStageRepository;
 import com.demo.batch.springbatch.util.BatchConstants;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class MoveStageToOrderAndBackupTasklet implements Tasklet {
 
   @NonNull
-  private OrderRepository orderRepository;
+  private OrderStageRepository orderStageRepository;
 
   @Override
   public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext)
@@ -30,7 +31,7 @@ public class MoveStageToOrderAndBackupTasklet implements Tasklet {
     * Call Store procedure to move data from PROD_CAT_EXTRACT_STAGE table to PROD_CAT_EXTRACT table and
     * then move old data from PROD_CAT_EXTRACT table to PROD_CAT_EXTRACT_HIST table
     */
-    orderRepository.moveStageToOrderTable();
+    orderStageRepository.moveStageToOrderTable();
     return RepeatStatus.FINISHED;
   }
 

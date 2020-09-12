@@ -7,6 +7,9 @@ package com.demo.batch.springbatch.util;
 
 public class BatchConstants {
 
+  public static final int BATCH_SUCCESS_EXIT_CODE = 0;
+  public static final int BATCH_FAILED_EXIT_CODE = 1;
+  
   //Job Name
   public static final String ORDER_PROCESS_JOB = "orderProcessJob";
   

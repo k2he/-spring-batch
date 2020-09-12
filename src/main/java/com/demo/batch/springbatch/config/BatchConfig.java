@@ -1,42 +1,32 @@
-package com.demo.batch.springbatch.batch;
+package com.demo.batch.springbatch.config;
 
-import static org.springframework.batch.core.BatchStatus.COMPLETED;
-import static org.springframework.batch.core.BatchStatus.FAILED;
-import static org.springframework.batch.core.BatchStatus.STARTED;
-import java.time.LocalDateTime;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.stereotype.Component;
+import com.demo.batch.springbatch.batch.OrderJobListener;
 import com.demo.batch.springbatch.batch.order.MoveStageToOrderAndBackupTasklet;
 import com.demo.batch.springbatch.batch.stage.DataCleaningTasklet;
 import com.demo.batch.springbatch.batch.stage.OrderStageProcessor;
 import com.demo.batch.springbatch.batch.stage.OrderStageReader;
 import com.demo.batch.springbatch.batch.stage.OrderStageWriter;
 import com.demo.batch.springbatch.batch.stage.SchemaValidationTasklet;
-import com.demo.batch.springbatch.config.AppProperties;
 import com.demo.batch.springbatch.dto.OrderList.Order;
 import com.demo.batch.springbatch.model.OrderStage;
 import com.demo.batch.springbatch.util.BatchConstants;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-/**
- * @author kaihe
- *
- */
 
 @RequiredArgsConstructor
-@Component
-@Slf4j
-public class OrderJobs extends JobExecutionListenerSupport {
+@EnableBatchProcessing
+@Configuration
+public class BatchConfig {
+
   @NonNull
   private JobBuilderFactory jobBuilderFactory;
 
@@ -65,12 +55,16 @@ public class OrderJobs extends JobExecutionListenerSupport {
   private MoveStageToOrderAndBackupTasklet moveStageToOrderAndBackupTasklet;
   
   @NonNull
+  private OrderJobListener orderJobListener;
+  
+  @NonNull
   private AppProperties appProperties;
 
   @Bean(name = "orderLoadJob")
   public Job orderLoadJob() {
     Job job = jobBuilderFactory.get(BatchConstants.ORDER_PROCESS_JOB)
-        .incrementer(new RunIdIncrementer()).listener(this)
+        .incrementer(new RunIdIncrementer())
+        .listener(orderJobListener)
         .start(step1())
         .next(step2())
         .next(step3())
@@ -113,22 +107,5 @@ public class OrderJobs extends JobExecutionListenerSupport {
   public Step step4() {
     return stepBuilderFactory.get(BatchConstants.BATCH_STEP_4)
         .tasklet(moveStageToOrderAndBackupTasklet).build();
-  }
-
-  
-  @Override
-  public void beforeJob(JobExecution jobExecution) {
-    if (jobExecution.getStatus() == STARTED) {
-      log.info("ORDER BATCH PROCESS STARTED at {}!", jobExecution.getStartTime());
-    }
-  }
-
-  @Override
-  public void afterJob(JobExecution jobExecution) {
-    if (jobExecution.getStatus() == COMPLETED) {
-      log.info("ORDER BATCH PROCESS COMPLETED at {}!", LocalDateTime.now());
-    } else if (jobExecution.getStatus() == FAILED) {
-      log.info("ORDER BATCH PROCESS FAILED at {}!", LocalDateTime.now());
-    }
   }
 }

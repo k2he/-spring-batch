@@ -92,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public OrderStage convertToOrderStage(OrderList.Order orderObj) throws Exception {
     // Convert orderObj to Json String
-    String jsonValue = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(orderObj);
+    String jsonValue = objectMapper.writeValueAsString(orderObj);
     log.info(jsonValue);
 
     LocalDate orderDate = LocalDate.of(orderObj.getOrderDate().getValue().getYear(),

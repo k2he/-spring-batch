@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<order_list>
+	<order>
+		<orderRef>REF_0001</orderRef>
+		<amount>10000.00</amount>
+		<orderDate>2018-12-12</orderDate>
+		<note>Details</note>
+		<productInformation>
+			<productName>Iphone xs max</productName>
+			<productCode>ip10000000</productCode>
+			<bin>1000</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+				<productOffer>
+					<code>offer0002</code>
+					<description>Employee discount</description>
+					<discount>40</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+	<order>
+		<orderRef>REF_0002</orderRef>
+		<amount>12500.00</amount>
+		<orderDate>2018-12-13</orderDate>
+		<note>Another</note>
+		<productInformation>
+			<productName>Iphone xs max case</productName>
+			<productCode>ip10000001</productCode>
+			<bin>1001</bin>
+			<productOfferList>
+				<productOffer>
+					<code>offer0001</code>
+					<description>Back to school offer</description>
+					<discount>20</discount>
+				</productOffer>
+				<productOffer>
+					<code>offer0002</code>
+					<description>Employee discount</description>
+					<discount>40</discount>
+				</productOffer>
+			</productOfferList>
+		</productInformation>
+	</order>
+</order_list>

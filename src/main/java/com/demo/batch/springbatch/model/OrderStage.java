@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -29,8 +30,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "orders_stage")
+@NamedStoredProcedureQuery(name = "moveStageToOrderTable",
+    procedureName = "move_stage_to_orders_table", resultClasses = OrderStage.class)
 public class OrderStage {
-  
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -42,11 +45,11 @@ public class OrderStage {
   private LocalDate orderDate;
 
   private String note;
-  
+
   @Lob
   @Column(columnDefinition = "CLOB NOT NULL")
-  private String productJson; 
-  
+  private String productJson;
+
   @CreatedDate
   private LocalDateTime createdDateTime;
 }
