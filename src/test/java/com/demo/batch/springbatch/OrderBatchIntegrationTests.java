@@ -3,7 +3,6 @@ package com.demo.batch.springbatch;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.batch.test.context.SpringBatchTest;
@@ -24,7 +23,6 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import com.demo.batch.springbatch.batch.OrderJobListener;
 import com.demo.batch.springbatch.batch.order.MoveStageToOrderAndBackupTasklet;
 import com.demo.batch.springbatch.config.BatchConfig;
-import com.demo.batch.springbatch.repository.OrderRepository;
 import com.demo.batch.springbatch.repository.OrderStageRepository;
 
 @RunWith(SpringRunner.class)

@@ -24,6 +24,6 @@ public class BatchConstants {
   
   public static final String XML_TO_STAGETABLE_TASK_EXECUTOR ="xmltoStageTableTaskExecutor";
   
-  public static final String SCHEMA_VALIDATION_FAILED_ERROR_ID = "mboa-order-batch-error-0001";
+  public static final String SCHEMA_VALIDATION_FAILED_ERROR_ID = "demo-order-batch-error-0001";
   
 }
