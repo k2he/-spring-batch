@@ -15,14 +15,14 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<project.build.jdkVersion>1.8</project.build.jdkVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.locale>en_US</project.build.locale>
 
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<version.jackson>2.11.0</version.jackson>
 		<version.commonsLang>3.10</version.commonsLang>
+		<version.commonsIo>2.10.0</version.commonsIo>
 		<version.jasypt>3.0.3</version.jasypt>
 		<global.version.surefire>3.0.0-M3</global.version.surefire>
 		<global.version.hsqldb>2.2.4</global.version.hsqldb>
@@ -60,6 +60,13 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${version.commonsLang}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${version.commonsIo}</version>
 		</dependency>
 
 		<dependency>

@@ -31,7 +31,10 @@ public class ScheduledTasks {
 
   @NonNull
   private Job orderLoadJob;
-  
+
+  @NonNull
+  private Job orderReportJob;
+
 //  @Scheduled(cron = "0 30 13 * * ?") // Fire at 13:30 every day
   @Scheduled(cron = "0 40 13 ? * MON-FRI") // Fire at 13:40 every Monday to Friday
   public void scheduleTaskWithCronExpression() throws Exception {
@@ -41,6 +44,16 @@ public class ScheduledTasks {
           .toJobParameters();
       jobLauncher.run(orderLoadJob, jobParameters);
       
+      log.info("Batch job has been invoked at {}", LocalDateTime.now());
+  }
+
+  // By default "-" we disable it if no value found.
+  @Scheduled(cron = "${app.order.report.cron:-}")
+  public void orderReportJob() throws Exception {
+      log.info("Cron Task :: Execution Time - {}", LocalDateTime.now());
+      JobParameters jobParameters =
+              new JobParametersBuilder().addDate("date", new Date(), true).toJobParameters();
+      jobLauncher.run(orderReportJob, jobParameters);
       log.info("Batch job has been invoked at {}", LocalDateTime.now());
   }
 }

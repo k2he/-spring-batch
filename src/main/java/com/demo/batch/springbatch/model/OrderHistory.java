@@ -51,5 +51,13 @@ public class OrderHistory {
   
   @CreatedDate
   private LocalDateTime archivedDateTime;
-  
+
+  public static OrderHistory mapToHistory(Order order) {
+    return OrderHistory.builder()
+            .orderRef(order.getOrderRef())
+            .amount(order.getAmount())
+            .productJson(order.getProductJson())
+            .archivedDateTime(LocalDateTime.now())
+            .build();
+  }
 }

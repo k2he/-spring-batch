@@ -12,7 +12,8 @@ public class BatchConstants {
   
   //Job Name
   public static final String ORDER_PROCESS_JOB = "orderProcessJob";
-  
+  public static final String ORDER_REPORT_JOB = "orderReportJob";
+
   //Item Reader Names
   public static final String ORDER_STAGE_ITEM_READER = "orderStageItemReader";
   
@@ -21,7 +22,13 @@ public class BatchConstants {
   public static final String BATCH_STEP_2 = "stage-data-cleaning-step";
   public static final String BATCH_STEP_3 = "save-xml-to-order-stage-step";
   public static final String BATCH_STEP_4 = "move-stage-to-order-table-step";
-  
+
+  //Order Step Names
+  public static final String REPORT_BATCH_STEP_1 = "move-old-files-to-archive-step";
+  public static final String REPORT_BATCH_STEP_2 = "create-csv-step";
+  public static final String REPORT_BATCH_STEP_3 = "move-data-to-history-step";
+  public static final String REPORT_BATCH_STEP_4 = "delete-old-files-in-archive-step";
+
   public static final String XML_TO_STAGETABLE_TASK_EXECUTOR ="xmltoStageTableTaskExecutor";
   
   public static final String SCHEMA_VALIDATION_FAILED_ERROR_ID = "demo-order-batch-error-0001";
